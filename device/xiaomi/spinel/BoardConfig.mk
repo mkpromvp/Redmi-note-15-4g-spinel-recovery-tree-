@@ -10,7 +10,7 @@ DEVICE_PATH := device/xiaomi/spinel
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
-# A/B
+# A/B Partitions
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
     odm_dlkm \
@@ -49,29 +49,32 @@ TARGET_NO_BOOTLOADER := true
 # Display
 TARGET_SCREEN_DENSITY := 450
 
-# Kernel - General Configuration
+# Kernel Configuration (Header v4 for Helio G99)
 BOARD_BOOTIMG_HEADER_VERSION := 4
 BOARD_KERNEL_BASE := 0x3fff8000
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_RAMDISK_OFFSET := 0x26f08000
 BOARD_KERNEL_TAGS_OFFSET := 0x07c88000
+
+# Mkbootimg Arguments
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 
-# Kernel - Prebuilt
+# Prebuilt Kernel Logic
+# ملاحظة: تم ضبط الاسم Image ليتوافق مع فك الضغط في الـ Action
 TARGET_FORCE_PREBUILT_KERNEL := true
 ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.xz
-BOARD_KERNEL_IMAGE_NAME := Image.xz
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image
+BOARD_KERNEL_IMAGE_NAME := Image
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 endif
 
-# Partitions
-BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
+# Partitions - Sizes (Standard for Spinel)
+BOARD_FLASH_BLOCK_SIZE := 262144
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -79,48 +82,45 @@ BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
-BOARD_SUPER_PARTITION_SIZE := 9126805504
-BOARD_SUPER_PARTITION_GROUPS := xiaomi_dynamic_partitions
-BOARD_XIAOMI_DYNAMIC_PARTITIONS_PARTITION_LIST := system system system_ext system_ext vendor vendor product product mi_ext mi_ext vendor_dlkm vendor_dlkm odm_dlkm odm_dlkm
-BOARD_XIAOMI_DYNAMIC_PARTITIONS_SIZE := 9122611200
 
-# Vendor Boot
+# Vendor Boot Configuration
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
 BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
+
+# Super Partition (Dynamic Partitions)
+BOARD_SUPER_PARTITION_SIZE := 9126805504
+BOARD_SUPER_PARTITION_GROUPS := xiaomi_dynamic_partitions
+BOARD_XIAOMI_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext vendor product mi_ext vendor_dlkm odm_dlkm
+BOARD_XIAOMI_DYNAMIC_PARTITIONS_SIZE := 9122611200
 
 # Platform
 TARGET_BOARD_PLATFORM := mt6789
 
-# Recovery
+# Recovery Pixel Format
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
-TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
 
-# Security patch level
-VENDOR_SECURITY_PATCH := 2021-08-01
-
-# Verified Boot
+# Verified Boot (AVB)
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
 
-# Hack: prevent anti rollback
+# Security & Anti-Rollback Hacks
 PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
 
-# TWRP Configuration
+# TWRP & UI Configuration
 TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
-
-# --- Custom Patches ---
 TW_VARIANT := AKRO-UNOFFICIAL
+TW_DEVICE_VERSION := AKRO_V3
+
+# Encryption Support
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
-TW_DEVICE_VERSION := AKRO_V3
 
 # OrangeFox Flags
 FOX_RECOVERY_INSTALL_GTOOLS := 1
