@@ -66,8 +66,8 @@ BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 # ملاحظة: تم ضبط الاسم Image ليتوافق مع فك الضغط في الـ Action
 TARGET_FORCE_PREBUILT_KERNEL := true
 ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel/Image
-BOARD_KERNEL_IMAGE_NAME := Image
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+BOARD_KERNEL_IMAGE_NAME := kernel
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/kernel/dtb.img
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
