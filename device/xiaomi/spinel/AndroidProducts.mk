@@ -6,7 +6,7 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_spinel.mk
+    $(LOCAL_DIR)/twrp_spinel.mk
 
 COMMON_LUNCH_CHOICES := \
     omni_spinel-user \
