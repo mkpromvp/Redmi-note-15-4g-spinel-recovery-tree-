@@ -16,7 +16,7 @@ $(call inherit-product, vendor/omni/config/common.mk)
 $(call inherit-product, device/xiaomi/spinel/device.mk)
 
 PRODUCT_DEVICE := spinel
-PRODUCT_NAME := twrp_spinel
+PRODUCT_NAME := omni_spinel
 PRODUCT_BRAND := Redmi
 PRODUCT_MODEL := spinel
 PRODUCT_MANUFACTURER := xiaomi
