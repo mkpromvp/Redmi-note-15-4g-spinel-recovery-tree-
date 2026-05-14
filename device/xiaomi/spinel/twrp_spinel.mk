@@ -10,13 +10,13 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit some common Omni stuff.
-$(call inherit-product, vendor/omni/config/common.mk)
+$(call inherit-product, vendor/twrp/config/common.mk)
 
 # Inherit from spinel device
 $(call inherit-product, device/xiaomi/spinel/device.mk)
 
 PRODUCT_DEVICE := spinel
-PRODUCT_NAME := omni_spinel
+PRODUCT_NAME := twrp_spinel
 PRODUCT_BRAND := Redmi
 PRODUCT_MODEL := spinel
 PRODUCT_MANUFACTURER := xiaomi
