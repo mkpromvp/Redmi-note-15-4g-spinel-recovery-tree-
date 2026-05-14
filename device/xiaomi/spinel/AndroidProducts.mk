@@ -9,6 +9,6 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/omni_spinel.mk
 
 COMMON_LUNCH_CHOICES := \
-    omni_spinel-user \
-    omni_spinel-userdebug \
-    omni_spinel-eng
+    twrp_spinel-user \
+    twrp_spinel-userdebug \
+    twrp_spinel-eng
